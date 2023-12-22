@@ -7,13 +7,16 @@ const ResCard = (props) => {
     // console.log(url);
     return(
         <div>
-          <div className="card-cont"  style={{margin: 10, padding: 6}}>
+          <div className="card-cont">
             <img className="card-img" 
             src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/"+
                   resData?.info?.cloudinaryImageId}
             alt='no-img' />
             <h1 style={{fontSize: '18px'}}>{resData?.info?.name}</h1>
             <p>{resData?.info?.cuisines.join(", ")}</p>
+            <h4>{resData?.info?.avgRating} stars</h4>
+            <h3>{resData?.info?.costForTwo}</h3>
+            <h4>{resData?.info?.sla?.deliveryTime} minutes</h4>
           </div>
         </div>
     )

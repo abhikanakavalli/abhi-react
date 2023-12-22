@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ResCard from "./ResCard";
+import { Link } from "react-router-dom";
 
 const dataRes = [
     {
@@ -383,8 +384,6 @@ const Body = () => {
     },[]);
 
     useEffect(()=>{
-        console.log("Filters Changed");
-        console.log(filters);
         if(filters.length>0){
 
             filters.forEach(filter=>{
@@ -426,7 +425,7 @@ const Body = () => {
         </>
         ):
         (<div className="body-cont">
-            <div>
+            <div style={{marginTop: 10, marginLeft: 10}}>
                 
                 <input type='text'value={searchText} placeholder="Search..."
                     onChange={(e) => setSearchText(e.target.value)}
@@ -446,8 +445,10 @@ const Body = () => {
                 }
             </div>
         <div style={{display: 'flex', flexWrap:'wrap'}}>
-        {filteredData && filteredData?.map((res,id) => (
-            <ResCard resData={res} key={id}/>
+        {filteredData && filteredData?.map((res) => (
+            <Link to={'/res/'+ res.info.id} key={res?.info?.id}>
+            <ResCard resData={res}/>
+            </Link>
         ))
         }
         </div>
