@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ItemResCards from "./ItemResCards";
 
 const RestaurantPage = () => {
     const [resData, setResData] = useState([]);
@@ -20,20 +21,17 @@ const RestaurantPage = () => {
     const menuDetails = resData[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards;
 
     const resName = resData[0]?.card?.card?.info;
-    console.log(resName);
+    const filter =  resData[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.filter((itm) => 
+    // console.log('ssdf', itm.card?.card?.['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.ItemCategory'));
+        itm?.card?.card?.['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.ItemCategory');
+    console.log('filter', filter);
 
 
     return(
-        <div>
+        <div className="m-4 text-center">
             <h1>{resName?.name}</h1>
-            <h3>{resName?.cuisines.join(", ")}</h3>
-            <h4>{resName?.costForTwoMessage}  ⭐{resName?.avgRating}</h4>
-            <h1>MENU</h1>
-            {menuDetails?.map((itm, id) => (
-                <ul key={id}>
-                    <li>{itm?.card?.info?.name}</li>
-                </ul>
-            ))}
+            <h3 className="mb-4">{resName?.cuisines.join(", ")}</h3>
+            <ItemResCards item={filter} />           
         </div>
     )
 }

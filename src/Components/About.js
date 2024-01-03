@@ -1,7 +1,8 @@
 const About = () => {
+    console.log('About');
     return(
         <div>
-            <h1>How About You</h1>
+            <h1 className="font-black">How About You</h1>
         </div>
     )
 };

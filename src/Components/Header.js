@@ -3,24 +3,24 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
     return (
-        <div className="header-cont">
-            <div className="logo-cont">
-                <img className="logo" 
+        <div className="flex justify-between shadow-lg bg-orange-100">
+            <div className="">
+                <img className="w-20" 
                 src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQax6ivsZZZl7KaEhtO195TQPdeuEfinL82ZQ&usqp=CAU'
                 alt='no-img' />
             </div>
-            <div className="nav-cont">
-                <ul>
-                    <li>
+            <div className="flex m-2 p-5">
+                <ul className="flex items-center">
+                    <li className="px-4">
                         <Link to="/">Home</Link>
                     </li>
-                    <li>
+                    <li className="px-4">
                         <Link to="/about">About</Link>
                     </li>
-                    <li>
+                    <li className="px-4">
                         <Link to="/contact">Contact</Link>
                     </li>
-                    <li>Cart</li>
+                    <li className="px-4">Cart</li>
                 </ul>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ResCard from "./ResCard";
+import ResCard, { withPromotedLabel } from "./ResCard";
 import { Link } from "react-router-dom";
 
 const dataRes = [
@@ -400,7 +400,7 @@ const Body = () => {
     const fetchData = async () => {
         const data = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.385044&lng=78.486671&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING');
         const jsonData = await data.json();
-        const filter = jsonData?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+        const filter = jsonData?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
         setData(filter);
         setFilteredData(filter);
     };
@@ -418,19 +418,22 @@ const Body = () => {
         
     }
 
+    const ResPromotedCard = withPromotedLabel(ResCard);
+
     return(
         <>
         {data.length === 0? (<>
         <h1>Loading.....</h1>
         </>
         ):
-        (<div className="body-cont">
-            <div style={{marginTop: 10, marginLeft: 10}}>
+        (<div className="">
+            <div className="m-2 p-2">
                 
-                <input type='text'value={searchText} placeholder="Search..."
+                <input className="border-solid border-2 border-black-200 mr-2"
+                     type='text'value={searchText} placeholder="Search..."
                     onChange={(e) => setSearchText(e.target.value)}
                 />
-                <button 
+                <button className="bg-sky-500 w-20"
                     onClick={handleFilter}
                 >
                     Search
@@ -444,10 +447,10 @@ const Body = () => {
                     ))
                 }
             </div>
-        <div style={{display: 'flex', flexWrap:'wrap'}}>
+        <div className="flex flex-wrap">
         {filteredData && filteredData?.map((res) => (
             <Link to={'/res/'+ res.info.id} key={res?.info?.id}>
-            <ResCard resData={res}/>
+                {res?.info?.aggregatedDiscountInfoV3?.header ? <ResPromotedCard resData={res}/>: <ResCard resData={res}/>}
             </Link>
         ))
         }

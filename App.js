@@ -1,23 +1,24 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./src/Components/Header";
 import Body from "./src/Components/Body";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Contact from "./src/Components/Contact";
-import About from "./src/Components/About";
 import ErrorPage from "./src/Components/ErrorPage";
 import RestaurantPage from "./src/Components/RestaurantPage";
 //React.createElement => object => HTMLElement 
 
 const AppLayout = () => {
   return(
-    <div className="App-cont">
+    <div>
         <Header/>
         <Outlet/>
     </div>
   )
     
 };
+
+const About = lazy(() => import('./src/Components/About'));
 
 const appRouter = createBrowserRouter([
   { path: '/',
@@ -27,7 +28,7 @@ const appRouter = createBrowserRouter([
         element: <Body/>
       },
       { path: '/about',
-        element: <About/>
+        element: <Suspense><About/></Suspense>
       },
       { path: '/contact',
         element: <Contact/>
