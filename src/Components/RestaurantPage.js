@@ -21,7 +21,7 @@ const RestaurantPage = () => {
     const menuDetails = resData[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards;
 
     const resName = resData[0]?.card?.card?.info;
-    const filter =  resData[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.filter((itm) => 
+    let filter =  resData[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.filter((itm) => 
     // console.log('ssdf', itm.card?.card?.['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.ItemCategory'));
         itm?.card?.card?.['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.ItemCategory');
     console.log('filter', filter);

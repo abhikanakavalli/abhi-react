@@ -1,382 +1,80 @@
-import React, { useEffect, useState } from "react";
-import ResCard, { withPromotedLabel } from "./ResCard";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import UserContext from "../Common/UserContext";
+import ResCard, { withPromotedLabel } from "./ResCard";
 
-const dataRes = [
-    {
-        info: {
-            "id": "3324",
-            "name": "Srikanya",
-            "cloudinaryImageId": "tw4ytwle8yommmgdy4b0",
-            "locality": "Punjagutta Road",
-            "areaName": "Punjagutta",
-            "costForTwo": "₹250 for two",
-            "cuisines": [
-                "Andhra",
-                "Seafood"
-            ],
-            "avgRating": 4.1,
-            "feeDetails": {
-                "restaurantId": "3324",
-                "fees": [
-                    {
-                        "name": "BASE_DISTANCE",
-                        "fee": 6700
-                    },
-                    {
-                        "name": "BASE_TIME"
-                    },
-                    {
-                        "name": "ANCILLARY_SURGE_FEE"
-                    }
-                ],
-                "totalFee": 6700
-            },
-            "parentId": "7317",
-            "avgRatingString": "4.1",
-            "totalRatingsString": "10K+",
-            "sla": {
-                "deliveryTime": 34,
-                "lastMileTravel": 6.8,
-                "serviceability": "SERVICEABLE",
-                "slaString": "34 mins",
-                "lastMileTravelString": "6.8 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2023-12-05 22:45:00",
-                "opened": true
-            },
-            "badges": {},
-            "isOpen": true,
-            "aggregatedDiscountInfoV2": {},
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
+
+const mockData = {
+    "info": {
+        "id": "4138",
+        "name": "Grand Hotel",
+        "cloudinaryImageId": "g1arzw6qd7g9affkmgzk",
+        "locality": "Banjara Hills",
+        "areaName": "Abids",
+        "costForTwo": "₹300 for two",
+        "cuisines": [
+            "Biryani",
+            "Chinese",
+            "Tandoor",
+            "Haleem"
+        ],
+        "avgRating": 4.3,
+        "parentId": "4001",
+        "avgRatingString": "4.3",
+        "totalRatingsString": "10K+",
+        "sla": {
+            "deliveryTime": 21,
+            "lastMileTravel": 1.2,
+            "serviceability": "SERVICEABLE",
+            "slaString": "21 mins",
+            "lastMileTravelString": "1.2 km",
+            "iconType": "ICON_TYPE_EMPTY"
         },
-        analytics: {},
-        cta: {
-            "link": "https://www.swiggy.com/restaurants/srikanya-road-punjagutta-hyderabad-3324",
-            "type": "WEBLINK"
-        }
+        "availability": {
+            "nextCloseTime": "2024-01-22 23:59:00",
+            "opened": true
+        },
+        "badges": {},
+        "isOpen": true,
+        "type": "F",
+        "badgesV2": {
+            "entityBadges": {
+                "imageBased": {},
+                "textBased": {},
+                "textExtendedBadges": {}
+            }
+        },
+        "aggregatedDiscountInfoV3": {
+            "header": "₹120 OFF",
+            "subHeader": "ABOVE ₹199",
+            "discountTag": "FLAT DEAL"
+        },
+        "differentiatedUi": {
+            "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
+            "differentiatedUiMediaDetails": {
+                "mediaType": "ADS_MEDIA_ENUM_IMAGE",
+                "lottie": {},
+                "video": {}
+            }
+        },
+        "reviewsSummary": {},
+        "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
+        "restaurantOfferPresentationInfo": {}
     },
-    {
-        info: {
-            "id": "3324",
-            "name": "Srikanya",
-            "cloudinaryImageId": "tw4ytwle8yommmgdy4b0",
-            "locality": "Punjagutta Road",
-            "areaName": "Punjagutta",
-            "costForTwo": "₹250 for two",
-            "cuisines": [
-                "Andhra",
-                "Seafood"
-            ],
-            "avgRating": 4.1,
-            "feeDetails": {
-                "restaurantId": "3324",
-                "fees": [
-                    {
-                        "name": "BASE_DISTANCE",
-                        "fee": 6700
-                    },
-                    {
-                        "name": "BASE_TIME"
-                    },
-                    {
-                        "name": "ANCILLARY_SURGE_FEE"
-                    }
-                ],
-                "totalFee": 6700
-            },
-            "parentId": "7317",
-            "avgRatingString": "4.1",
-            "totalRatingsString": "10K+",
-            "sla": {
-                "deliveryTime": 34,
-                "lastMileTravel": 6.8,
-                "serviceability": "SERVICEABLE",
-                "slaString": "34 mins",
-                "lastMileTravelString": "6.8 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2023-12-05 22:45:00",
-                "opened": true
-            },
-            "badges": {},
-            "isOpen": true,
-            "aggregatedDiscountInfoV2": {},
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        },
-        analytics: {},
-        cta: {
-            "link": "https://www.swiggy.com/restaurants/srikanya-road-punjagutta-hyderabad-3324",
-            "type": "WEBLINK"
-        }
-    },
-    {
-        info: {
-            "id": "3324",
-            "name": "Srikanya",
-            "cloudinaryImageId": "tw4ytwle8yommmgdy4b0",
-            "locality": "Punjagutta Road",
-            "areaName": "Punjagutta",
-            "costForTwo": "₹250 for two",
-            "cuisines": [
-                "Andhra",
-                "Seafood"
-            ],
-            "avgRating": 4.1,
-            "feeDetails": {
-                "restaurantId": "3324",
-                "fees": [
-                    {
-                        "name": "BASE_DISTANCE",
-                        "fee": 6700
-                    },
-                    {
-                        "name": "BASE_TIME"
-                    },
-                    {
-                        "name": "ANCILLARY_SURGE_FEE"
-                    }
-                ],
-                "totalFee": 6700
-            },
-            "parentId": "7317",
-            "avgRatingString": "4.1",
-            "totalRatingsString": "10K+",
-            "sla": {
-                "deliveryTime": 34,
-                "lastMileTravel": 6.8,
-                "serviceability": "SERVICEABLE",
-                "slaString": "34 mins",
-                "lastMileTravelString": "6.8 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2023-12-05 22:45:00",
-                "opened": true
-            },
-            "badges": {},
-            "isOpen": true,
-            "aggregatedDiscountInfoV2": {},
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        },
-        analytics: {},
-        cta: {
-            "link": "https://www.swiggy.com/restaurants/srikanya-road-punjagutta-hyderabad-3324",
-            "type": "WEBLINK"
-        }
-    },
-    {
-        info: {
-            "id": "3324",
-            "name": "Srikanya",
-            "cloudinaryImageId": "tw4ytwle8yommmgdy4b0",
-            "locality": "Punjagutta Road",
-            "areaName": "Punjagutta",
-            "costForTwo": "₹250 for two",
-            "cuisines": [
-                "Andhra",
-                "Seafood"
-            ],
-            "avgRating": 4.1,
-            "feeDetails": {
-                "restaurantId": "3324",
-                "fees": [
-                    {
-                        "name": "BASE_DISTANCE",
-                        "fee": 6700
-                    },
-                    {
-                        "name": "BASE_TIME"
-                    },
-                    {
-                        "name": "ANCILLARY_SURGE_FEE"
-                    }
-                ],
-                "totalFee": 6700
-            },
-            "parentId": "7317",
-            "avgRatingString": "4.1",
-            "totalRatingsString": "10K+",
-            "sla": {
-                "deliveryTime": 34,
-                "lastMileTravel": 6.8,
-                "serviceability": "SERVICEABLE",
-                "slaString": "34 mins",
-                "lastMileTravelString": "6.8 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2023-12-05 22:45:00",
-                "opened": true
-            },
-            "badges": {},
-            "isOpen": true,
-            "aggregatedDiscountInfoV2": {},
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        },
-        analytics: {},
-        cta: {
-            "link": "https://www.swiggy.com/restaurants/srikanya-road-punjagutta-hyderabad-3324",
-            "type": "WEBLINK"
-        }
-    },
-    {
-        info: {
-            "id": "3324",
-            "name": "Srikanya",
-            "cloudinaryImageId": "tw4ytwle8yommmgdy4b0",
-            "locality": "Punjagutta Road",
-            "areaName": "Punjagutta",
-            "costForTwo": "₹250 for two",
-            "cuisines": [
-                "Andhra",
-                "Seafood"
-            ],
-            "avgRating": 4.1,
-            "feeDetails": {
-                "restaurantId": "3324",
-                "fees": [
-                    {
-                        "name": "BASE_DISTANCE",
-                        "fee": 6700
-                    },
-                    {
-                        "name": "BASE_TIME"
-                    },
-                    {
-                        "name": "ANCILLARY_SURGE_FEE"
-                    }
-                ],
-                "totalFee": 6700
-            },
-            "parentId": "7317",
-            "avgRatingString": "4.1",
-            "totalRatingsString": "10K+",
-            "sla": {
-                "deliveryTime": 34,
-                "lastMileTravel": 6.8,
-                "serviceability": "SERVICEABLE",
-                "slaString": "34 mins",
-                "lastMileTravelString": "6.8 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2023-12-05 22:45:00",
-                "opened": true
-            },
-            "badges": {},
-            "isOpen": true,
-            "aggregatedDiscountInfoV2": {},
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        },
-        analytics: {},
-        cta: {
-            "link": "https://www.swiggy.com/restaurants/srikanya-road-punjagutta-hyderabad-3324",
-            "type": "WEBLINK"
-        }
+    "analytics": {},
+    "cta": {
+        "link": "https://www.swiggy.com/restaurants/grand-hotel-banjara-hills-abids-hyderabad-4138",
+        "type": "WEBLINK"
     }
-];
-
-
+}
 
 const Body = () => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState([mockData]);
     const [searchText, setSearchText] = useState('');
     const [filters,setFilters] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
+    const {userName, setName} = useContext(UserContext);
+    // const [name,setName] = useState(userName);
 
 
     useEffect(() => {
@@ -387,7 +85,7 @@ const Body = () => {
         if(filters.length>0){
 
             filters.forEach(filter=>{
-                const filterData = data.filter((itm) => itm.info?.name.toLowerCase().includes(searchText.toLowerCase()));
+                const filterData = data?.filter((itm) => itm?.info?.name.toLowerCase().includes(searchText.toLowerCase()));
                 setFilteredData(filterData);
             })
         }else{
@@ -408,7 +106,7 @@ const Body = () => {
     const handleFilter = () => {
         
         setFilters([...filters, searchText]);
-        const filterData = data.filter((itm) => itm.info?.name.toLowerCase().includes(searchText.toLowerCase()));
+        const filterData = data?.filter((itm) => itm?.info?.name.toLowerCase().includes(searchText.toLowerCase()));
         setFilteredData(filterData);
         
     }
@@ -422,15 +120,26 @@ const Body = () => {
 
     return(
         <>
-        {data.length === 0? (<>
+        {false? (<>
         <h1>Loading.....</h1>
         </>
         ):
         (<div className="">
+            <div>
+            <input type='text' 
+                value={userName}
+                onChange={(e) => {
+                    // setName(e.target.value);
+                    setName(e.target.value);
+                }}
+            />
+            </div>
             <div className="m-2 p-2">
                 
                 <input className="border-solid border-2 border-black-200 mr-2"
-                     type='text'value={searchText} placeholder="Search..."
+                     type='text'
+                    data-testid='searchInput'
+                     value={searchText} placeholder="Search..."
                     onChange={(e) => setSearchText(e.target.value)}
                 />
                 <button className="bg-sky-500 w-20"
@@ -438,14 +147,14 @@ const Body = () => {
                 >
                     Search
                 </button>
-                {
+                {/* {
                     filters.length > 0 && filters.map((filter,id) => (
                         <p key={id} 
                         onClick={()=>filterClickHandler(filter)}>
                             {filter} <span style={{color:'red'}}>X</span>
                         </p>
                     ))
-                }
+                } */}
             </div>
         <div className="flex flex-wrap">
         {filteredData && filteredData?.map((res) => (

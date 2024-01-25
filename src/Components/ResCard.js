@@ -2,12 +2,14 @@ import React from 'react';
 
 const ResCard = (props) => {
     const {resData} = props;
+
+    console.log('sdf', resData)
     // const url = {"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/"+
     // resData?.info?.badgesV2?.cloudinaryImageId};
     // console.log(url);
     return(
-        <div className=''>
-          <div className="h-96 m-2 p-1 rounded-lg border-solid border-2 border-black-100 w-40 bg-orange-100 hover:bg-orange-200">
+          <div
+          className="h-96 m-2 p-1 rounded-lg border-solid border-2 border-black-100 w-40 bg-orange-100 hover:bg-orange-200">
             <img className="w-40 rounded-lg" 
             src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/"+
                   resData?.info?.cloudinaryImageId}
@@ -18,7 +20,6 @@ const ResCard = (props) => {
             <h3>{resData?.info?.costForTwo}</h3>
             <h4>{resData?.info?.sla?.deliveryTime} minutes</h4>
           </div>
-        </div>
     )
 }
 
@@ -27,7 +28,7 @@ export const withPromotedLabel = (ResCard) => {
     const {resData} = props;
 
     return(
-      <div>
+      <div data-testid='resCard'>
         <label className='absolute bg-black text-white m-1 p-1 rounded-lg'>
           {resData?.info?.aggregatedDiscountInfoV3?.header}
         </label>
